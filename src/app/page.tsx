@@ -6,6 +6,7 @@ import type { Currency, InvoiceState } from "@/types/invoice";
 import { computeTotals, createInitialInvoiceState, validateInvoice } from "@/lib/invoice";
 import { getBusinessInfo, getLastInvoiceNumber, setBusinessInfo, setLastInvoiceNumber } from "@/lib/storage";
 import { downloadInvoicePdf } from "@/lib/pdf/generateInvoicePdf";
+import { FAQ_ITEMS } from "@/lib/site";
 import InvoiceForm from "@/components/InvoiceForm";
 import InvoicePreview from "@/components/InvoicePreview";
 import TemplateSelector from "@/components/TemplateSelector";
@@ -237,6 +238,75 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        <section className="mx-auto flex w-full max-w-3xl flex-col gap-10 border-t border-(--desk-line) pt-10">
+          <div>
+            <h2 className="font-serif text-2xl font-semibold">How InvoiceReady works</h2>
+            <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+              {[
+                {
+                  step: "1",
+                  title: "Fill in your details",
+                  body: "Add your business info, your client's name, and at least one line item. Everything else — tax, discount, payment details, notes — is optional.",
+                },
+                {
+                  step: "2",
+                  title: "Preview instantly",
+                  body: "Watch the invoice update live as you type, and switch between the Classic, Modern, and Minimal templates to find the look you want.",
+                },
+                {
+                  step: "3",
+                  title: "Download the PDF",
+                  body: "Click Download PDF to get a ready-to-send invoice file — generated entirely in your browser, with nothing uploaded to a server.",
+                },
+              ].map((s) => (
+                <div key={s.step} className="rounded-xl border border-(--panel-border) bg-(--panel) p-5">
+                  <div className="mb-2 flex h-7 w-7 items-center justify-center rounded-full bg-(--accent-tint) font-mono text-[13px] font-semibold text-(--accent-strong)">
+                    {s.step}
+                  </div>
+                  <h3 className="font-semibold text-(--ink)">{s.title}</h3>
+                  <p className="mt-1 text-[13.5px] leading-relaxed text-(--ink-soft)">{s.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h2 className="font-serif text-2xl font-semibold">
+              A free invoice generator for freelancers and unregistered businesses
+            </h2>
+            <p className="mt-3 text-[14.5px] leading-relaxed text-(--ink-soft)">
+              InvoiceReady is built for freelancers, consultants, and small businesses who need to send an
+              occasional professional invoice without paying for accounting software or registering a
+              business. There&apos;s no account to create and no business or tax ID required — just fill in
+              the form and download a PDF. All 13 supported currencies (USD, EUR, GBP, INR, LKR, BDT, SGD,
+              AUD, AED, SAR, QAR, CAD, IDR) and all invoice generation happen entirely in your browser, so
+              your invoice data is never sent to or stored on a server.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="font-serif text-2xl font-semibold">Frequently asked questions</h2>
+            <div className="mt-5 flex flex-col gap-3">
+              {FAQ_ITEMS.map((item) => (
+                <details
+                  key={item.question}
+                  className="group rounded-xl border border-(--panel-border) bg-(--panel) p-4 open:pb-4"
+                >
+                  <summary className="cursor-pointer list-none text-[14.5px] font-semibold text-(--ink) marker:content-none">
+                    <span className="flex items-center justify-between gap-3">
+                      {item.question}
+                      <span className="flex-none text-(--ink-faint) transition-transform group-open:rotate-45">
+                        +
+                      </span>
+                    </span>
+                  </summary>
+                  <p className="mt-2.5 text-[13.5px] leading-relaxed text-(--ink-soft)">{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
 
         <footer className="pt-1.5 text-center text-[11.5px] text-(--ink-faint)">
           Runs entirely in your browser — no accounts, no servers, nothing stored except locally on this
